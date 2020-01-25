@@ -1,0 +1,9 @@
+[submodule "web-ui"]
+	path = web-ui
+	url = git@github.com:Jnavarr56/web-ui.git
+[submodule "authentication-api"]
+	path = authentication-api
+	url = git@github.com:Jnavarr56/authentication-api.git
+[submodule "users-api"]
+	path = users-api
+	url = git@github.com:Jnavarr56/users-api.git

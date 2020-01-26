@@ -7,3 +7,6 @@
 [submodule "users-api"]
 	path = users-api
 	url = git@github.com:Jnavarr56/users-api.git
+[submodule "nginx-server"]
+	path = nginx-server
+	url = git@github.com:Jnavarr56/nginx-server.git

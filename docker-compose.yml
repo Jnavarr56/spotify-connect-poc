@@ -1,0 +1,72 @@
+version: '3.7'
+
+services:
+    database:
+        container_name: 'database'
+        image: 'mongo'
+        ports:
+            - '27017:27017'
+    authentication-api:
+        container_name: 'authentication-api'
+        build:
+            context: './authentication-api'
+            dockerfile: 'Dockerfile'
+        volumes:
+            - '.:/app'
+            - '/app/authentication-api/node_modules'
+        env_file: 
+            - './.env'
+        environment:
+            - 'PORT=3000'
+            - 'DB_URL=mongodb://database:27017'
+            - 'GATEWAY_BASE_URL=http://server'
+        expose:
+            - '3000'
+        depends_on: 
+            - 'database'
+    users-api:
+        container_name: 'users-api'
+        build:
+            context: './users-api'
+            dockerfile: 'Dockerfile'
+        volumes:
+            - '.:/app'
+            - '/app/users-api/node_modules'
+        env_file: 
+            - './.env'
+        environment:
+            - 'PORT=3000'
+            - 'DB_URL=mongodb://database:27017'
+            - 'GATEWAY_BASE_URL=http://server'
+        expose:
+            - '3000'
+        depends_on: 
+            - 'authentication-api'
+    web-ui:
+        container_name: 'web-ui'
+        build:
+            context: './web-ui'
+            dockerfile: 'Dockerfile'
+        volumes:
+            - '.:/app'
+            - '/app/web-ui/node_modules'
+        env_file: 
+            - './.env'
+        environment:
+            - 'PORT=3000'
+        expose:
+            - '3000'
+        depends_on: 
+            - 'users-api'
+    server: 
+        container_name: 'server'
+        build:
+            context: './nginx-server'
+            dockerfile: 'Dockerfile'
+        volumes:
+            - '.:/app'
+        ports:
+            - '80:80'
+        depends_on: 
+            - 'web-ui'
+

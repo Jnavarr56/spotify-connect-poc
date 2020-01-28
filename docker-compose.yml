@@ -24,6 +24,24 @@ services:
             - '3000'
         depends_on: 
             - 'database'
+    notifications-api:
+        container_name: 'notifications-api'
+        build:
+            context: './notifications-api'
+            dockerfile: 'Dockerfile'
+        volumes:
+            - '.:/app'
+            - '/app/notifications-api/node_modules'
+        env_file: 
+            - './.env'
+        environment:
+            - 'PORT=3000'
+            - 'DB_URL=mongodb://database:27017'
+            - 'GATEWAY_BASE_URL=http://server'
+        expose:
+            - '3000'
+        depends_on: 
+            - 'authentication-api'
     users-api:
         container_name: 'users-api'
         build:

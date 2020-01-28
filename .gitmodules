@@ -10,3 +10,6 @@
 [submodule "nginx-server"]
 	path = nginx-server
 	url = git@github.com:Jnavarr56/nginx-server.git
+[submodule "notifications-api"]
+	path = notifications-api
+	url = git@github.com:Jnavarr56/notifications-api.git
